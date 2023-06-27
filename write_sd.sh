@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # What am I doing wrong here?
+# Seemingly this bootloops repeatedly.
 
 DEVICE=$1
 
@@ -36,7 +37,7 @@ mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
 echo "Copying kernel image"
-cp linux-next/arch/arm64/boot/Image tmp/
+mkimage -A arm64 -O linux -T kernel -C none -a 0x80008000 -e 0x80008000 -n "Linux kernel" -d linux-next/arch/arm64/boot/Image tmp/Image
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
