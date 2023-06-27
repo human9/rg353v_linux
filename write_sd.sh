@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # What am I doing wrong here?
-# Seemingly this bootloops repeatedly.
+# Guess I can try using buildroot.
 
 DEVICE=$1
 
@@ -37,9 +37,8 @@ mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
 echo "Running mkimage and copying kernel"
-#mkimage -A arm64 -O linux -T kernel -C none -a 0x80008000 -e 0x80008000 -n "Linux kernel" -d linux-next/arch/arm64/boot/Image tmp/Image
-# if I do the above, it bootloops... not sure if below is valid
-cp linux-next/arch/arm64/boot/Image tmp/Image
+./u-boot/tools/mkimage -A arm64 -O linux -T kernel -C none -a 0x00080000 -e 0x00080000 -n "Linux kernel" -d linux-next/arch/arm64/boot/Image tmp/Image
+# Address wrong?
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
@@ -47,7 +46,7 @@ echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image" >> tmp/extlinux/extlinux.conf
 echo "  FDT /boot/rockchip/rk3566-anbernic-rg353v.dtb" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s UUID ${DEVICE}$ROOT)
-echo "  APPEND earlyprintk root=UUID=$UUID console=tty0 rw rootwait rootfstype=ext4 init=/sbin/init" >> tmp/extlinux/extlinux.conf
+echo "  APPEND earlyprintk root=UUID=$UUID console=ttyUSB0,1500000 console=tty0 rw rootwait rootfstype=ext4 init=/sbin/init video=HDMI-A-1:1280x720@60" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
