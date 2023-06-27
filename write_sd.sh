@@ -31,6 +31,7 @@ mkfs.ext4 ${DEVICE}$ROOT
 echo "Writing u-boot-rockchip.bin..."
 dd if=u-boot/u-boot-rockchip.bin of=$DEVICE seek=64 status=progress
 
+echo "Mounting boot partition"
 mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
@@ -46,12 +47,14 @@ UUID=$(blkid -o value -s UUID ${DEVICE}$ROOT)
 echo "  APPEND earlyprintk root=UUID=$UUID console=tty0 rw rootwait rootfstype=ext4 init=/sbin/init" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
-mkdir -p tmp/boot/rockchip # Copy devicetrees
+mkdir -p tmp/boot/rockchip
 cp u-boot/arch/arm/dts/rk3566-anbernic-rgxx3.dtb tmp/boot/rockchip/
 cp linux-next/arch/arm64/boot/dts/rockchip/rk3566-anbernic*.dtb tmp/boot/rockchip/
+
+echo "Unmounting boot partition"
+sync
 umount tmp
 rmdir tmp
 
-sync
 echo "Done."
 
