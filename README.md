@@ -1,0 +1,3 @@
+# nextOS
+
+The loader seems to work but kernel definitely isn't booting yet...
