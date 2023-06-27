@@ -1,3 +1,3 @@
 # nextOS
 
-The loader seems to work but kernel definitely isn't booting yet...
+The loader seems to work.. linux seemingly doesn't boot / it crashes.
