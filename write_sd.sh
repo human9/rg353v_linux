@@ -36,14 +36,16 @@ echo "Mounting boot partition"
 mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
-echo "Copying kernel image"
-mkimage -A arm64 -O linux -T kernel -C none -a 0x80008000 -e 0x80008000 -n "Linux kernel" -d linux-next/arch/arm64/boot/Image tmp/Image
+echo "Running mkimage and copying kernel"
+#mkimage -A arm64 -O linux -T kernel -C none -a 0x80008000 -e 0x80008000 -n "Linux kernel" -d linux-next/arch/arm64/boot/Image tmp/Image
+# if I do the above, it bootloops... not sure if below is valid
+cp linux-next/arch/arm64/boot/Image tmp/Image
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
 echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image" >> tmp/extlinux/extlinux.conf
-echo "  FDTDIR /boot/rockchip/" >> tmp/extlinux/extlinux.conf
+echo "  FDT /boot/rockchip/rk3566-anbernic-rg353v.dtb" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s UUID ${DEVICE}$ROOT)
 echo "  APPEND earlyprintk root=UUID=$UUID console=tty0 rw rootwait rootfstype=ext4 init=/sbin/init" >> tmp/extlinux/extlinux.conf
 
