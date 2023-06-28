@@ -29,6 +29,19 @@ parted -s $DEVICE -a min unit s mkpart rootfs ext4 262144 100%
 ROOT=3
 mkfs.ext4 ${DEVICE}$ROOT
 
+echo "Copying rootfs files"
+mkdir broot
+mkdir devroot
+sync
+mount buildroot/output/images/rootfs.ext2 broot
+mount ${DEVICE}$ROOT devroot
+rsync -a broot/ devroot/
+sync
+umount devroot
+umount broot
+rmdir devroot
+rmdir broot
+
 echo "Writing u-boot-rockchip.bin..."
 dd if=u-boot/u-boot-rockchip.bin of=$DEVICE seek=64 status=progress
 
@@ -37,8 +50,7 @@ mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
 echo "Running mkimage and copying kernel"
-./u-boot/tools/mkimage -A arm64 -O linux -T kernel -C none -a 0x00080000 -e 0x00080000 -n "Linux kernel" -d linux-next/arch/arm64/boot/Image tmp/Image
-# Address wrong?
+cp linux-next/arch/arm64/boot/Image tmp/Image
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
@@ -50,7 +62,7 @@ echo "  APPEND earlyprintk root=UUID=$UUID console=ttyUSB0,1500000 console=tty0 
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
-cp u-boot/arch/arm/dts/rk3566-anbernic-rgxx3.dtb tmp/boot/rockchip/
+cp u-boot/arch/arm/dts/rk3566-anbernic-rgxx3.dtb tmp/
 cp linux-next/arch/arm64/boot/dts/rockchip/rk3566-anbernic*.dtb tmp/boot/rockchip/
 
 echo "Unmounting boot partition"
