@@ -50,7 +50,7 @@ mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
 echo "Running mkimage and copying kernel"
-cp linux-next/arch/arm64/boot/Image tmp/Image
+cp linux/arch/arm64/boot/Image tmp/Image
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
@@ -63,7 +63,7 @@ echo "  APPEND earlyprintk root=UUID=$UUID console=ttyUSB0,1500000 console=tty0 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
 cp u-boot/arch/arm/dts/rk3566-anbernic-rgxx3.dtb tmp/
-cp linux-next/arch/arm64/boot/dts/rockchip/rk3566-anbernic*.dtb tmp/boot/rockchip/
+cp linux/arch/arm64/boot/dts/rockchip/rk3566-anbernic*.dtb tmp/boot/rockchip/
 
 echo "Unmounting boot partition"
 sync
