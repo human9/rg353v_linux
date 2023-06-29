@@ -20,3 +20,8 @@ Build each subproject:
 Write to SD card:
 
     sudo ./write_sd.sh /dev/sdX
+
+## Debug
+
+Found the UART - it's at the top right of the front of the board. TODO: pictures, documentation.
+U-Boot log uploaded, linux not printing anything yet.
