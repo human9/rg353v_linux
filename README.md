@@ -25,3 +25,6 @@ Write to SD card:
 
 Found the UART - it's at the top right of the front of the board. TODO: pictures, documentation.
 U-Boot log uploaded, linux not printing anything yet.
+
+I did actually manage to boot with the Anbernic and JELOS kernels - at least to the point of it printing messages.
+So must be an issue with kernel.
