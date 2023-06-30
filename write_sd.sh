@@ -58,7 +58,7 @@ echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image" >> tmp/extlinux/extlinux.conf
 echo "  FDT /boot/rockchip/rk3566-anbernic-rg353v.dtb" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s UUID ${DEVICE}$ROOT)
-echo "  APPEND earlyprintk root=UUID=$UUID console=ttyUSB0,1500000 console=tty0 rw rootwait rootfstype=ext4 init=/sbin/init video=HDMI-A-1:1280x720@60" >> tmp/extlinux/extlinux.conf
+echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=uart8250,mmio32,0xfe660000 root=UUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
