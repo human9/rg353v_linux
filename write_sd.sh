@@ -49,7 +49,7 @@ echo "Mounting boot partition"
 mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
-echo "Running mkimage and copying kernel"
+echo "Copying kernel"
 cp linux/arch/arm64/boot/Image tmp/Image
 
 echo "Creating extlinux.conf"
@@ -57,8 +57,8 @@ mkdir tmp/extlinux
 echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image" >> tmp/extlinux/extlinux.conf
 echo "  FDT /boot/rockchip/rk3566-anbernic-rg353v.dtb" >> tmp/extlinux/extlinux.conf
-UUID=$(blkid -o value -s UUID ${DEVICE}$ROOT)
-echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=uart8250,mmio32,0xfe660000 root=UUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init" >> tmp/extlinux/extlinux.conf
+UUID=$(blkid -o value -s PARTUUID ${DEVICE}$ROOT)
+echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=tty0 console=uart8250,mmio32,0xfe660000 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=HDMI-A-1:640x480@60" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip

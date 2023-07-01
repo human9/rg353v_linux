@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cp uboot_new.config u-boot/.config 
 cd u-boot
 export CROSS_COMPILE=aarch64-linux-gnu-
 export BL31=../rkbin/bin/rk35/rk3568_bl31_v1.42.elf
@@ -9,6 +10,6 @@ export ARCH=arm64 # is this needed?
 mkdir -p patches
 b4 am -o patches 20230515160032.126742-1-macroalpha82@gmail.com
 git am -i patches/*.mbx
-make anbernic-rgxx3_defconfig
-#make menuconfig
+#make anbernic-rgxx3_defconfig
+make menuconfig
 make -j8
