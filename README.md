@@ -1,9 +1,27 @@
 # Booting linux from SD card on RG353V
 
-- I have a V1 panel
-- It seems like u-boot starts
-- But there's just a blank screen after a vibration
-- Unsure of how to debug
+## Debug log
+
+- Output on UART console works
+- U-Boot starts okay as long as I specify the FDT file
+  - (autoselect works but FDTDIR results in error?)
+- Linux boots fine but screen refuses to turn on
+
+### Stuff from dmesg that might be important
+
+```
+[    1.497534] vcc_sys: could not add device link regulator.18: -ENOENT
+[    1.697557] vcc_3v3: could not add device link regulator.19: -ENOENT
+````
+
+```
+[    1.710873] dwhdmi-rockchip fe0a0000.hdmi: Looking up avdd-0v9-supply from device tree
+[    1.710903] dwhdmi-rockchip fe0a0000.hdmi: Looking up avdd-0v9-supply property in node /hdmi@fe0a0000 failed
+[    1.710957] dwhdmi-rockchip fe0a0000.hdmi: supply avdd-0v9 not found, using dummy regulator
+[    1.711942] dwhdmi-rockchip fe0a0000.hdmi: Looking up avdd-1v8-supply from device tree
+[    1.711973] dwhdmi-rockchip fe0a0000.hdmi: Looking up avdd-1v8-supply property in node /hdmi@fe0a0000 failed
+[    1.712020] dwhdmi-rockchip fe0a0000.hdmi: supply avdd-1v8 not found, using dummy regulator
+```
 
 ## Building
 
@@ -21,10 +39,3 @@ Write to SD card:
 
     sudo ./write_sd.sh /dev/sdX
 
-## Debug
-
-Found the UART - it's at the top right of the front of the board. TODO: pictures, documentation.
-U-Boot log uploaded, linux not printing anything yet.
-
-I did actually manage to boot with the Anbernic and JELOS kernels - at least to the point of it printing messages.
-So must be an issue with kernel.
