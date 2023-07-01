@@ -3,9 +3,9 @@
 ## Debug log
 
 - Output on UART console works
-- U-Boot starts okay as long as I specify the FDT file
-  - (autoselect works but FDTDIR results in error?)
-- Linux boots fine but screen refuses to turn on
+- U-Boot starts okay as long as I specify the FDT file 
+  - (autoselect works but FDTDIR results in error?) (see fdtdir_issue.log)
+- Linux boots fine but screen refuses to turn on (see serial_output.log)
 
 ### Stuff from dmesg that might be important
 
@@ -22,6 +22,8 @@
 [    1.711973] dwhdmi-rockchip fe0a0000.hdmi: Looking up avdd-1v8-supply property in node /hdmi@fe0a0000 failed
 [    1.712020] dwhdmi-rockchip fe0a0000.hdmi: supply avdd-1v8 not found, using dummy regulator
 ```
+
+(see also dmesg_output.log)
 
 ## Building
 
