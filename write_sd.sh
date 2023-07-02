@@ -37,6 +37,9 @@ mount buildroot/output/images/rootfs.ext2 broot
 mount ${DEVICE}$ROOT devroot
 rsync -a broot/ devroot/
 sync
+echo "Copying kernel modules"
+rsync -a linux/modules_build/ devroot/usr/
+sync
 umount devroot
 umount broot
 sync
