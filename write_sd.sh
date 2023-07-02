@@ -62,7 +62,7 @@ echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image.gz" >> tmp/extlinux/extlinux.conf
 echo "  FDTDIR /boot/" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s PARTUUID ${DEVICE}$ROOT)
-echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=tty0 console=uart8250,mmio32,0xfe660000 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
+echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=uart8250,mmio32,0xfe660000 console=tty0 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
