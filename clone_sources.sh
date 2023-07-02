@@ -4,11 +4,11 @@ set -x
 
 # Obtain linux
 
-git clone --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git linux
+git clone --branch v6.4 --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git linux
 
 # Obtain u-boot
 
-git clone  --depth 1 https://source.denx.de/u-boot/u-boot.git u-boot
+git clone  --branch v2023.07-rc5 --depth 1 https://source.denx.de/u-boot/u-boot.git u-boot
 
 # Obtain buildroot
 
