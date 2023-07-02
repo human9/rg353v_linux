@@ -18,3 +18,9 @@ Write to SD card:
 
     sudo ./write_sd.sh /dev/sdX
 
+
+## Issues
+
+- The WIFI/BT (RTL8821CS) doesn't seem to be working - firmware fails to load.
+- Software shutdown doesn't seem to work sometimes
+
