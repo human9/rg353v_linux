@@ -6,5 +6,5 @@ export CROSS_COMPILE=aarch64-linux-gnu-
 export ARCH=arm64
 make menuconfig
 make -j8
+make Image.gz
 make dtbs
-

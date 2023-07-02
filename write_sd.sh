@@ -39,6 +39,7 @@ rsync -a broot/ devroot/
 sync
 umount devroot
 umount broot
+sync
 rmdir devroot
 rmdir broot
 
@@ -50,12 +51,12 @@ mkdir tmp
 sync
 mount ${DEVICE}$BOOT tmp
 echo "Copying kernel"
-cp linux/arch/arm64/boot/Image tmp/Image
+cp linux/arch/arm64/boot/Image.gz tmp/Image.gz
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
 echo "LABEL linux" >> tmp/extlinux/extlinux.conf
-echo "  LINUX /Image" >> tmp/extlinux/extlinux.conf
+echo "  LINUX /Image.gz" >> tmp/extlinux/extlinux.conf
 echo "  FDTDIR /boot/" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s PARTUUID ${DEVICE}$ROOT)
 echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=tty0 console=uart8250,mmio32,0xfe660000 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
