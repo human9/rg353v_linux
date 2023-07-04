@@ -22,5 +22,6 @@ Write to SD card:
 ## Issues
 
 - The WIFI/BT (RTL8821CS) doesn't seem to be working - firmware fails to load.
+- Seems like a bug? https://www.kernel.org/doc/html/v4.15/admin-guide/reporting-bugs.html
 - Software shutdown doesn't seem to work sometimes
 

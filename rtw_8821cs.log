@@ -1,0 +1,27 @@
+[    4.410535] rtw_8821cs mmc3:0001:1: Firmware version 24.11.0, H2C version 12
+[    4.748703] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x11080): -110
+[    4.751042] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x11080): -110
+[    4.752724] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x10080): -110
+[    4.754177] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x10080): -110
+[    4.755671] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x10040): -110
+[    4.757080] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x10040): -110
+[    4.758594] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x11700): -110
+[    4.760014] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x11700): -110
+[    4.761480] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x11708): -110
+[    4.763024] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x11330): -110
+[    4.764426] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x1022c): -110
+[    4.765845] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x1022c): -110
+[    4.768086] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x20): -110
+[    4.769727] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x11208): -110
+[    4.770996] rtw_8821cs mmc3:0001:1: sdio write32 failed (0x11208): -110
+[    4.772455] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x20): -110
+[    4.773740] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x24): -110
+[    4.775027] rtw_8821cs mmc3:0001:1: sdio read32 failed (0x28): -110
+[    4.776299] rtw_8821cs mmc3:0001:1: Failed to write 4608 byte(s) to SDIO port 0x0000840c
+[    4.778221] rtw_8821cs mmc3:0001:1: failed to write data to rsvd page
+[    4.779578] rtw_8821cs mmc3:0001:1: failed to download rsvd page
+[    4.780885] rtw_8821cs mmc3:0001:1: failed to download firmware
+[    4.782172] rtw_8821cs mmc3:0001:1: failed to setup chip efuse info
+[    4.783347] rtw_8821cs mmc3:0001:1: failed to setup chip information
+[    4.785688] rtw_8821cs: probe of mmc3:0001:1 failed with error -110
+
