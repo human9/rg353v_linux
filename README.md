@@ -23,5 +23,5 @@ Write to SD card:
 
 - The WIFI/BT (RTL8821CS) works, but only after an rmmod rtw88_8821cs and modprobe rtw88_8821cs
 - Software shutdown doesn't seem to work - sometimes. Have to hold down power to power off fully.
-- Keen to test with 6.5 rc1
 - Maybe it's a hardware fault on my own thing? e.g. https://github.com/raspberrypi/linux/issues/2830 / https://github.com/espressif/esp-hosted/issues/93
+- Keen to test with 6.5 rc1 - might buff out by then.
