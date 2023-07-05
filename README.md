@@ -21,7 +21,7 @@ Write to SD card:
 
 ## Issues
 
-- The WIFI/BT (RTL8821CS) doesn't seem to be working - firmware fails to load.
-- Seems like a bug? https://www.kernel.org/doc/html/v4.15/admin-guide/reporting-bugs.html
-- Software shutdown doesn't seem to work sometimes
-- I'll wait until merge window closed, then test rc1. Maybe things fixed then. If not, report.
+- The WIFI/BT (RTL8821CS) works, but only after an rmmod rtw88_8821cs and modprobe rtw88_8821cs
+- Software shutdown doesn't seem to work - sometimes. Have to hold down power to power off fully.
+- Keen to test with 6.5 rc1
+- Maybe it's a hardware fault on my own thing? e.g. https://github.com/raspberrypi/linux/issues/2830 / https://github.com/espressif/esp-hosted/issues/93
