@@ -1,6 +1,6 @@
 # Booting linux from SD card on RG353V
 
-It works!
+Current status: Boots OK on 6.5-rc1
 
 ## Building
 
@@ -25,4 +25,3 @@ Write to SD card:
 - Software shutdown doesn't seem to work - sometimes. Have to hold down power to power off fully. Due to unbalanced regulator disables? https://lore.kernel.org/all/646e391f.810a0220.214ce.d680@mx.google.com/
 - Maybe it's a hardware fault on my own thing? e.g. https://github.com/raspberrypi/linux/issues/2830 / https://github.com/espressif/esp-hosted/issues/93
 - Hmm, might be a transient thing solvable by disconnecting battery. May also be related to the UART to usb dongle.
-- Testing with 6.5-rc1, seem to have some new issues, see [dmesg.txt](dmesg.txt)

@@ -35,7 +35,15 @@ mkdir devroot
 sync
 mount buildroot/output/images/rootfs.ext2 broot
 mount ${DEVICE}$ROOT devroot
-rsync -a broot/ devroot/
+echo "Copying relevant firmware"
+mkdir -p devroot/usr/lib/firmware
+rsync -a --info=progress2 broot/usr/lib/firmware/ devroot/usr/lib/firmware
+#rsync -a broot/ devroot/
+echo "Copying Arch rootfs"
+ROOTFS=/home/jrs/Projects/rg353v/builds/arch/rootfs/
+rsync -a --info=progress2 $ROOTFS devroot/
+#ROOTFS=/home/jrs/Projects/rg353v/builds/yocto/poky/build/tmp-glibc/deploy/images/rg353v/core-image-plasma-bigscreen-rg353v.tar.gz
+#tar -xf $ROOTFS -C devroot/
 sync
 echo "Copying kernel modules"
 rsync -a linux/modules_build/ devroot/usr/
@@ -62,7 +70,7 @@ echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image.gz" >> tmp/extlinux/extlinux.conf
 echo "  FDTDIR /boot/" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s PARTUUID ${DEVICE}$ROOT)
-echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=tty0 console=uart8250,mmio32,0xfe660000 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
+echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=uart8250,mmio32,0xfe660000 console=tty0 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
