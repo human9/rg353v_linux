@@ -15,7 +15,7 @@ export ARCH=arm64
 # make
 make menuconfig
 make -j8
-make Image.gz
+make Image.zst
 mkdir -p linux/modules_build
 make modules INSTALL_MOD_PATH=modules_build
 make modules_install INSTALL_MOD_PATH=modules_build

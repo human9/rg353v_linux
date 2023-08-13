@@ -8,6 +8,12 @@ DEVICE=$1
 [ -z "$DEVICE" ] && echo "please specify device" && exit 1
 sudo umount ${DEVICE}*
 
+DEVP=""
+if [[ "$DEVICE" == *"loop"* ]]; then
+  echo "Loop device detected."
+  DEVP="p"
+fi
+
 echo "Zeroing device"
 dd if=/dev/zero of=$DEVICE bs=1M count=32
 
@@ -22,19 +28,19 @@ echo "Creating boot partition"
 parted -s $DEVICE -a min unit s mkpart boot fat32 32768 262143
 BOOT=2
 parted -s $DEVICE set $BOOT boot on
-mkfs.fat ${DEVICE}$BOOT
+mkfs.fat ${DEVICE}$DEVP$BOOT
 
 echo "Creating rootfs"
 parted -s $DEVICE -a min unit s mkpart rootfs ext4 262144 100%
 ROOT=3
-mkfs.ext4 ${DEVICE}$ROOT
+mkfs.ext4 ${DEVICE}$DEVP$ROOT
 
 echo "Copying rootfs files"
 mkdir broot
 mkdir devroot
 sync
 mount buildroot/output/images/rootfs.ext2 broot
-mount ${DEVICE}$ROOT devroot
+mount ${DEVICE}$DEVP$ROOT devroot
 echo "Copying relevant firmware"
 mkdir -p devroot/usr/lib/firmware
 rsync -a --info=progress2 broot/usr/lib/firmware/ devroot/usr/lib/firmware
@@ -60,16 +66,17 @@ dd if=u-boot/u-boot-rockchip.bin of=$DEVICE seek=64 status=progress
 echo "Mounting boot partition"
 mkdir tmp
 sync
-mount ${DEVICE}$BOOT tmp
+mount ${DEVICE}$DEVP$BOOT tmp
 echo "Copying kernel"
-cp linux/arch/arm64/boot/Image.gz tmp/Image.gz
+cp linux/arch/arm64/boot/Image tmp/Image
+zstd -c10 tmp/Image > tmp/Image.zst
 
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
 echo "LABEL linux" >> tmp/extlinux/extlinux.conf
-echo "  LINUX /Image.gz" >> tmp/extlinux/extlinux.conf
+echo "  LINUX /Image.zst" >> tmp/extlinux/extlinux.conf
 echo "  FDTDIR /boot/" >> tmp/extlinux/extlinux.conf
-UUID=$(blkid -o value -s PARTUUID ${DEVICE}$ROOT)
+UUID=$(blkid -o value -s PARTUUID ${DEVICE}$DEVP$ROOT)
 echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=uart8250,mmio32,0xfe660000 console=tty0 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
