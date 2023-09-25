@@ -36,15 +36,9 @@ ROOT=3
 mkfs.ext4 ${DEVICE}$DEVP$ROOT
 
 echo "Copying rootfs files"
-mkdir broot
 mkdir devroot
 sync
-mount buildroot/output/images/rootfs.ext2 broot
 mount ${DEVICE}$DEVP$ROOT devroot
-echo "Copying relevant firmware"
-mkdir -p devroot/usr/lib/firmware
-rsync -a --info=progress2 broot/usr/lib/firmware/ devroot/usr/lib/firmware
-#rsync -a broot/ devroot/
 echo "Copying Arch rootfs"
 ROOTFS=/home/jrs/Projects/rg353v/builds/arch/rootfs/
 rsync -a --info=progress2 $ROOTFS devroot/
@@ -71,13 +65,15 @@ echo "Copying kernel"
 cp linux/arch/arm64/boot/Image tmp/Image
 zstd -c10 tmp/Image > tmp/Image.zst
 
+# TODO: uboot set reset gpio?
+
 echo "Creating extlinux.conf"
 mkdir tmp/extlinux
 echo "LABEL linux" >> tmp/extlinux/extlinux.conf
 echo "  LINUX /Image.zst" >> tmp/extlinux/extlinux.conf
 echo "  FDTDIR /boot/" >> tmp/extlinux/extlinux.conf
 UUID=$(blkid -o value -s PARTUUID ${DEVICE}$DEVP$ROOT)
-echo "  APPEND earlycon=uart8250,mmio32,0xfe660000 console=uart8250,mmio32,0xfe660000 console=tty0 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
+echo "  APPEND console=uart8250,mmio32,0xfe660000 console=tty0 root=PARTUUID=$UUID rw rootwait rootfstype=ext4 init=/sbin/init video=DSI-1:640x480@60" >> tmp/extlinux/extlinux.conf
 
 echo "Copying devicetree files"
 mkdir -p tmp/boot/rockchip
