@@ -1,6 +1,6 @@
 # Booting linux from SD card on RG353V
 
-Current status: Boots OK on 6.5-rc1
+Current status: Boots OK on 6.6-rc3
 
 ## Building
 
@@ -12,7 +12,6 @@ Build each subproject:
 
     ./make_uboot.sh
     ./make_linux.sh
-    ./make_buildroot.sh
 
 Write to SD card:
 
@@ -22,6 +21,9 @@ Write to SD card:
 ## Issues
 
 - The WIFI/BT (RTL8821CS) works, but only after an rmmod rtw88_8821cs and modprobe rtw88_8821cs
-- Software shutdown doesn't seem to work - sometimes. Have to hold down power to power off fully. Due to unbalanced regulator disables? https://lore.kernel.org/all/646e391f.810a0220.214ce.d680@mx.google.com/
-- Maybe it's a hardware fault on my own thing? e.g. https://github.com/raspberrypi/linux/issues/2830 / https://github.com/espressif/esp-hosted/issues/93
-- Hmm, might be a transient thing solvable by disconnecting battery. May also be related to the UART to usb dongle.
+- With latest config wifi is the only issue...
+
+# Dependencies
+
+rsync
+
