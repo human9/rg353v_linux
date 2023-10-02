@@ -40,19 +40,15 @@ mkdir devroot
 sync
 mount ${DEVICE}$DEVP$ROOT devroot
 echo "Copying Arch rootfs"
-ROOTFS=/home/jrs/Projects/rg353v/builds/arch/rootfs/
+ROOTFS=../archroot/rootfs/
 rsync -a --info=progress2 $ROOTFS devroot/
-#ROOTFS=/home/jrs/Projects/rg353v/builds/yocto/poky/build/tmp-glibc/deploy/images/rg353v/core-image-plasma-bigscreen-rg353v.tar.gz
-#tar -xf $ROOTFS -C devroot/
 sync
 echo "Copying kernel modules"
 rsync -a linux/modules_build/ devroot/usr/
 sync
 umount devroot
-umount broot
 sync
 rmdir devroot
-rmdir broot
 
 echo "Writing u-boot-rockchip.bin..."
 dd if=u-boot/u-boot-rockchip.bin of=$DEVICE seek=64 status=progress
