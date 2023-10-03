@@ -37,6 +37,9 @@ def mainloop():
         for key, _ in selector.select():
             dev = key.fileobj
             for event in dev.read():
+                # Invert these axes to make it work correctly...
+                if event.code == e.ABS_X or event.code == e.ABS_Y:
+                    event.value = invert_absval(event.value)
                 vdev.write(event.type, event.code, event.value)
                 vdev.syn()    
 
@@ -47,6 +50,9 @@ def fix_absinfo(val):
     """
     return [ (t, AbsInfo(info[0], 15, 1023, info[3], info[4], info[5])) 
         for t, info in val ]
+
+def invert_absval(val):
+    return 1008 - (val - 15) + 15
 
 if __name__ == '__main__':
     mainloop()
