@@ -6,7 +6,6 @@ export CFLAGS="-g0 -O2 march=armv8.2-a mtune=cortex-a55"
 export CROSS_COMPILE=aarch64-linux-gnu-
 export ARCH=arm64
 git checkout v6.6-rc4
-git apply ../reverse_leftstick.patch
 # get patchset
 #mkdir -p patches
 # this is needed for v2 displays
