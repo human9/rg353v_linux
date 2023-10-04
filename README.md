@@ -21,8 +21,10 @@ Write to SD card:
 ## Issues
 
 - The WIFI/BT (RTL8821CS) works, but only after an rmmod rtw88_8821cs and modprobe rtw88_8821cs
+    - At commit 216f0e622cd25, it works, for a short while.
 - Software poweroff/reset bug: if system is on for longer than 60secs it will hang on boot. Very consistent.
 - Left joystick seems inverted
+- I did have rumble working but now it doesn't. Check older commits.
 
 # Dependencies
 
