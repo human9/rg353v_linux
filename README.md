@@ -1,6 +1,6 @@
 # Booting linux from SD card on RG353V
 
-Current status: Boots OK on 6.6-rc3
+Current status: Boots OK on 6.6-rc4
 
 ## Building
 
@@ -20,13 +20,20 @@ Write to SD card:
 
 ## Issues
 
-- The WIFI/BT (RTL8821CS) works, but only after an rmmod rtw88_8821cs and modprobe rtw88_8821cs
-    - At commit 216f0e622cd25, it works, for a short while.
-- Software poweroff/reset bug: if system is on for longer than 60secs it will hang on boot. Very consistent.
-- Left joystick seems inverted
-- I did have rumble working but now it doesn't. Check older commits.
+- The WIFI/BT (RTL8821CS) works as of the current commit, but..
+    - There may be some issues, specifically with changing power states? It seems very stable if I add rtw88_core.disable_lps_deep=1 to kernel parameters.
+    - If there are issues as before rmmod rtw88_8821cs and modprobe rtw88_8821csshould fix it temporarily.
+- Software poweroff/reset bug: This is actually due to incorrect firmware loading.
+    - uboot on the internal eMMC is always loaded if present, so to boot from SD currently without bugs at time of writing you have to zero out the eMMC.
+- Rumble is working with the current devmerge script, although I need to submit some questions / patches upstream about apparent bugs..
+
+# TODO
+
+- Provide build scripts for my rootfs. It's just an archlinux arm rootfs, but buildroot will also work.
+- Cleanup.
 
 # Dependencies
 
 rsync
 
+todo: what else?
